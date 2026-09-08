@@ -25,6 +25,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = effectiveTheme
+    document.documentElement.setAttribute('data-bs-theme', effectiveTheme)
   }, [effectiveTheme])
 
   const value = useMemo(() => ({ mode, setMode, effectiveTheme }), [mode, effectiveTheme])

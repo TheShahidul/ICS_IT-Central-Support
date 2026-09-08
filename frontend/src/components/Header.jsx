@@ -16,7 +16,7 @@ export default function Header({ user }) {
     <header className="app-header">
       <div>
         <span className="app-eyebrow">Internal operations</span>
-        <strong><img className="header-logo" src="/branding/ics-logo.png" alt="ICS - IT Central Support" /></strong>
+        <strong><img className="header-logo" src="/branding/ICS_icon-textbased.png" alt="ICS - IT Central Support" /></strong>
       </div>
       <div className="user-chip">
         <ThemeSwitcher />

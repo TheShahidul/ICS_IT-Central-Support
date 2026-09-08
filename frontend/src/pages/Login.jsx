@@ -92,7 +92,7 @@ export default function Login() {
 			<div className="row justify-content-center">
 				<div className="col-12 col-md-7 col-lg-5">
 					<div className="text-center mb-4">
-						<img className="login-logo mb-3" src="/branding/ics-logo.png" alt="ICS - IT Central Support" />
+						<img className="login-logo mb-3" src="/branding/ICS_icon-textbased.png" alt="ICS - IT Central Support" />
 						<h1 className="h4 fw-bold mb-1">IT Operations &amp; Asset Portal</h1>
 						<p className="text-muted small">Financial Services Simulated IT Infrastructure</p>
 					</div>
