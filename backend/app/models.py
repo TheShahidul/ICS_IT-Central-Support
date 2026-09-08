@@ -69,7 +69,7 @@ class Department(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     # Relationships
     users = db.relationship('User', backref='department', lazy=True, cascade='all, delete-orphan')
@@ -82,7 +82,9 @@ class Department(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'created_at': self.created_at.isoformat()
+            'user_count': len(self.users) if self.users else 0,
+            'asset_count': len(self.assets) if self.assets else 0,
+            'created_at': self.created_at.isoformat() if self.created_at else None
         }
 
 
@@ -98,7 +100,7 @@ class User(db.Model):
     role = db.Column(db.String(50), default=UserRole.EMPLOYEE, nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     # Relationships
     created_tickets = db.relationship('Ticket', backref='creator', lazy=True, foreign_keys='Ticket.created_by', cascade='all, delete-orphan')
@@ -125,8 +127,9 @@ class User(db.Model):
             'email': self.email,
             'role': self.role,
             'department_id': self.department_id,
+            'department_name': self.department.name if self.department else None,
             'is_active': self.is_active,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat() if self.created_at else None
         }
         if include_password:
             data['password_hash'] = self.password_hash
@@ -148,8 +151,8 @@ class Ticket(db.Model):
     assigned_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     asset_id = db.Column(db.Integer, db.ForeignKey('asset.id'), nullable=True)
     resolution = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     resolved_at = db.Column(db.DateTime, nullable=True)
     
     # Relationships
@@ -172,8 +175,8 @@ class Ticket(db.Model):
             'assigned_to': self.assigned_to,
             'asset_id': self.asset_id,
             'resolution': self.resolution,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
         }
         if include_comments:
@@ -189,7 +192,7 @@ class TicketComment(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey('ticket.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comment = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self):
         return f'<TicketComment {self.id}>'
@@ -199,8 +202,10 @@ class TicketComment(db.Model):
             'id': self.id,
             'ticket_id': self.ticket_id,
             'user_id': self.user_id,
+            'author_name': self.author.name if self.author else None,
+            'author_role': self.author.role if self.author else None,
             'comment': self.comment,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat() if self.created_at else None
         }
 
 
@@ -220,7 +225,7 @@ class Asset(db.Model):
     assigned_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=False)
     notes = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self):
         return f'<Asset {self.asset_tag}>'
@@ -237,9 +242,12 @@ class Asset(db.Model):
             'warranty_expiry': self.warranty_expiry.isoformat() if self.warranty_expiry else None,
             'status': self.status,
             'assigned_to': self.assigned_to,
+            'assigned_user_name': self.assigned_user.name if self.assigned_user else None,
+            'assigned_user_email': self.assigned_user.email if self.assigned_user else None,
             'department_id': self.department_id,
+            'department_name': self.department.name if self.department else None,
             'notes': self.notes,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat() if self.created_at else None
         }
 
 
@@ -253,7 +261,7 @@ class AuditLog(db.Model):
     entity_type = db.Column(db.String(50), nullable=False)
     entity_id = db.Column(db.Integer, nullable=False)
     details = db.Column(db.JSON, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
 
     actor = db.relationship('User', backref='audit_logs', lazy=True)
 
@@ -261,9 +269,10 @@ class AuditLog(db.Model):
         return {
             'id': self.id,
             'actor_id': self.actor_id,
+            'actor_name': self.actor.name if self.actor else None,
             'action': self.action,
             'entity_type': self.entity_type,
             'entity_id': self.entity_id,
             'details': self.details or {},
-            'created_at': self.created_at.isoformat(),
+            'created_at': self.created_at.isoformat() if self.created_at else None,
         }

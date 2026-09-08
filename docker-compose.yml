@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ics_it_support
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=docker-production-secret-key-change-me
+      - SESSION_COOKIE_SECURE=false
+    volumes:
+      - app_data:/app/backend/instance
+    restart: unless-stopped
+
+volumes:
+  app_data:

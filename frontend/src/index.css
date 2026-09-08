@@ -246,3 +246,229 @@ html, body, #root {
     padding: 1rem;
   }
 }
+
+/* ==========================================================================
+   STATUS & PRIORITY BADGES
+   ========================================================================== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Ticket Statuses */
+.status-badge--open {
+  background: rgba(33, 150, 243, 0.12);
+  color: #1976d2;
+  border-color: rgba(33, 150, 243, 0.28);
+}
+.status-badge--open .status-dot { background: #2196f3; }
+
+.status-badge--assigned {
+  background: rgba(156, 39, 176, 0.12);
+  color: #8e24aa;
+  border-color: rgba(156, 39, 176, 0.28);
+}
+.status-badge--assigned .status-dot { background: #ab47bc; }
+
+.status-badge--in-progress {
+  background: rgba(255, 152, 0, 0.13);
+  color: #e65100;
+  border-color: rgba(255, 152, 0, 0.32);
+}
+.status-badge--in-progress .status-dot { background: #ff9800; }
+
+.status-badge--resolved {
+  background: rgba(76, 175, 80, 0.13);
+  color: #2e7d32;
+  border-color: rgba(76, 175, 80, 0.3);
+}
+.status-badge--resolved .status-dot { background: #4caf50; }
+
+.status-badge--closed {
+  background: rgba(120, 144, 156, 0.14);
+  color: #455a64;
+  border-color: rgba(120, 144, 156, 0.3);
+}
+.status-badge--closed .status-dot { background: #78909c; }
+
+/* Asset Statuses */
+.status-badge--available {
+  background: rgba(76, 175, 80, 0.13);
+  color: #2e7d32;
+  border-color: rgba(76, 175, 80, 0.3);
+}
+.status-badge--available .status-dot { background: #4caf50; }
+
+.status-badge--under-repair {
+  background: rgba(239, 108, 0, 0.13);
+  color: #d84315;
+  border-color: rgba(239, 108, 0, 0.32);
+}
+.status-badge--under-repair .status-dot { background: #ff5722; }
+
+.status-badge--retired, .status-badge--lost {
+  background: rgba(158, 158, 158, 0.15);
+  color: #616161;
+  border-color: rgba(158, 158, 158, 0.3);
+}
+.status-badge--retired .status-dot, .status-badge--lost .status-dot { background: #9e9e9e; }
+
+/* Dark Theme Adjustments for Status Badges */
+:root[data-theme='dark'] .status-badge--open { color: #64b5f6; background: rgba(33, 150, 243, 0.2); }
+:root[data-theme='dark'] .status-badge--assigned { color: #ce93d8; background: rgba(156, 39, 176, 0.2); }
+:root[data-theme='dark'] .status-badge--in-progress { color: #ffb74d; background: rgba(255, 152, 0, 0.2); }
+:root[data-theme='dark'] .status-badge--resolved { color: #81c784; background: rgba(76, 175, 80, 0.2); }
+:root[data-theme='dark'] .status-badge--closed { color: #b0bec5; background: rgba(120, 144, 156, 0.22); }
+:root[data-theme='dark'] .status-badge--available { color: #81c784; background: rgba(76, 175, 80, 0.2); }
+:root[data-theme='dark'] .status-badge--under-repair { color: #ff8a65; background: rgba(239, 108, 0, 0.22); }
+:root[data-theme='dark'] .status-badge--retired,
+:root[data-theme='dark'] .status-badge--lost { color: #bdbdbd; background: rgba(158, 158, 158, 0.2); }
+
+/* Priority Badges */
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.58rem;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.priority-badge--low {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475569;
+}
+.priority-badge--medium {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+}
+.priority-badge--high {
+  background: rgba(234, 88, 12, 0.14);
+  color: #c2410c;
+}
+.priority-badge--critical {
+  background: rgba(225, 29, 72, 0.14);
+  color: #be123c;
+  box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.25);
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.25); }
+  50% { box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.45); }
+  100% { box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.25); }
+}
+
+:root[data-theme='dark'] .priority-badge--low { color: #94a3b8; background: rgba(100, 116, 139, 0.22); }
+:root[data-theme='dark'] .priority-badge--medium { color: #38bdf8; background: rgba(2, 132, 199, 0.22); }
+:root[data-theme='dark'] .priority-badge--high { color: #fb923c; background: rgba(234, 88, 12, 0.22); }
+:root[data-theme='dark'] .priority-badge--critical { color: #fb7185; background: rgba(225, 29, 72, 0.25); }
+
+/* ==========================================================================
+   METRIC & DASHBOARD CARDS
+   ========================================================================== */
+.stat-card {
+  border-radius: 12px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  padding: 1.25rem 1.4rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.stat-card-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.stat-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+}
+.stat-card-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Status Breakdown Bar */
+.breakdown-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--surface-muted);
+  margin-bottom: 1rem;
+}
+.breakdown-segment {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Quick Persona Cards */
+.persona-card {
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-raised);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.persona-card:hover {
+  border-color: var(--theme-accent, #2774a8);
+  transform: translateY(-1px);
+  background: var(--surface-muted);
+}
+
+/* Modal Overlay */
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-content-custom {
+  background: var(--surface-raised);
+  color: var(--text-main);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+}
+

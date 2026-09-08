@@ -51,6 +51,17 @@ def serialize_ticket(ticket, include_comments=False):
     data['assigned_technician'] = (
         ticket.assigned_technician.to_dict() if ticket.assigned_technician else None
     )
+    if ticket.asset:
+        data['asset'] = {
+            'id': ticket.asset.id,
+            'asset_tag': ticket.asset.asset_tag,
+            'brand': ticket.asset.brand,
+            'model': ticket.asset.model,
+            'asset_type': ticket.asset.asset_type,
+            'status': ticket.asset.status,
+        }
+    else:
+        data['asset'] = None
     return data
 
 
@@ -80,6 +91,15 @@ def list_tickets():
         return validation_error('assigned_to must be an integer')
     if assigned_to is not None:
         query = query.filter_by(assigned_to=assigned_to)
+
+    search = request.args.get('q', '').strip()
+    if search:
+        search_pattern = f"%{search}%"
+        query = query.filter(
+            (Ticket.ticket_number.ilike(search_pattern)) |
+            (Ticket.title.ilike(search_pattern)) |
+            (Ticket.description.ilike(search_pattern))
+        )
 
     tickets = query.order_by(Ticket.created_at.desc()).all()
     return {'tickets': [serialize_ticket(ticket) for ticket in tickets]}, 200
@@ -247,7 +267,7 @@ def add_comment(ticket_id):
     ticket = db.session.get(Ticket, ticket_id)
     if ticket is None:
         return {'error': 'Ticket not found'}, 404
-    if role_value(g.current_user) == UserRole.EMPLOYEE and ticket.created_by != g.current_user.id:
+    if role_value(g.current_user) == UserRole.EMPLOYEE.value and ticket.created_by != g.current_user.id:
         return {'error': 'Insufficient permissions'}, 403
 
     data = request.get_json(silent=True) or {}

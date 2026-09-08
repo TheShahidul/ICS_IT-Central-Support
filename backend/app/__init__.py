@@ -9,7 +9,14 @@ db = SQLAlchemy()
 def create_app(config_name='development'):
     """Application factory pattern"""
     
-    app = Flask(__name__)
+    # Check if compiled frontend exists (production / unified deployment)
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    frontend_dist = os.path.join(base_dir, 'frontend', 'dist')
+
+    if os.path.exists(frontend_dist):
+        app = Flask(__name__, static_folder=frontend_dist, static_url_path='')
+    else:
+        app = Flask(__name__)
     
     # Load configuration
     config_class = get_config(config_name)
@@ -45,22 +52,42 @@ def create_app(config_name='development'):
     from app.routes.dashboard import dashboard_bp
     from app.routes.users import users_bp
     from app.routes.audit import audit_bp
+    from app.routes.departments import departments_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(tickets_bp)
     app.register_blueprint(assets_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(audit_bp)
+    app.register_blueprint(departments_bp)
     
     # Health check endpoint
     @app.route('/api/health', methods=['GET'])
     def health():
         return {'status': 'ok'}, 200
+
+    # SPA catch-all routing (serves index.html for client-side routing)
+    if os.path.exists(frontend_dist):
+        from flask import send_from_directory
+
+        @app.route('/', defaults={'path': ''})
+        @app.route('/<path:path>')
+        def serve_frontend(path):
+            if path.startswith('api/'):
+                return {'error': 'Endpoint not found'}, 404
+            file_path = os.path.join(app.static_folder, path)
+            if path != '' and os.path.exists(file_path):
+                return send_from_directory(app.static_folder, path)
+            return send_from_directory(app.static_folder, 'index.html')
     
-    # Create database tables on startup
+    # Create database tables on startup & auto-seed if fresh deployment
     with app.app_context():
         try:
             db.create_all()
+            if config_name != 'testing':
+                if not Department.query.first():
+                    from seed.seed_data import seed_database
+                    seed_database()
         except Exception as e:
             app.logger.error(f"Database initialization error: {e}")
     

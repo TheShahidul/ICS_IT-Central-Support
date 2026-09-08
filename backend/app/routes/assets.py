@@ -6,7 +6,7 @@ from flask import Blueprint, g, request
 from app import db
 from app.middleware.auth_middleware import login_required
 from app.services.audit_service import record_event
-from app.models import Asset, AssetStatus, AssetType, Department, User, UserRole
+from app.models import Asset, AssetStatus, AssetType, Department, Ticket, User, UserRole
 from app.utils.generators import generate_asset_tag
 
 
@@ -67,6 +67,20 @@ def list_assets():
         if asset_type not in {item.value for item in AssetType}:
             return validation_error('Invalid asset_type')
         query = query.filter_by(asset_type=asset_type)
+
+    dept_id = request.args.get('department_id', type=int)
+    if dept_id is not None:
+        query = query.filter_by(department_id=dept_id)
+
+    search = request.args.get('q', '').strip()
+    if search:
+        pattern = f"%{search}%"
+        query = query.filter(
+            (Asset.asset_tag.ilike(pattern)) |
+            (Asset.brand.ilike(pattern)) |
+            (Asset.model.ilike(pattern)) |
+            (Asset.serial_number.ilike(pattern))
+        )
 
     assets = query.order_by(Asset.asset_tag).all()
     return {'assets': [asset.to_dict() for asset in assets]}, 200
@@ -182,3 +196,21 @@ def update_asset(asset_id):
     )
     db.session.commit()
     return {'asset': asset.to_dict()}, 200
+
+
+@assets_bp.get('/<int:asset_id>/tickets')
+@login_required
+def get_asset_tickets(asset_id):
+    asset = db.session.get(Asset, asset_id)
+    if asset is None:
+        return {'error': 'Asset not found'}, 404
+    if role_value(g.current_user) == UserRole.EMPLOYEE.value and asset.assigned_to != g.current_user.id:
+        return {'error': 'Insufficient permissions'}, 403
+
+    ticket_query = Ticket.query.filter_by(asset_id=asset_id)
+    if role_value(g.current_user) == UserRole.EMPLOYEE.value:
+        ticket_query = ticket_query.filter_by(created_by=g.current_user.id)
+
+    tickets = ticket_query.order_by(Ticket.created_at.desc()).all()
+    from app.routes.tickets import serialize_ticket
+    return {'tickets': [serialize_ticket(t) for t in tickets]}, 200

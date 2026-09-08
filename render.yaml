@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ics-it-central-support
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn --chdir backend wsgi:app"
+    healthCheckPath: "/api/health"
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: SESSION_COOKIE_SECURE
+        value: "true"

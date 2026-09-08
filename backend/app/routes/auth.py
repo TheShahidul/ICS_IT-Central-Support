@@ -41,3 +41,25 @@ def me():
     if user is None:
         return {'error': 'Authentication required'}, 401
     return {'user': user.to_dict()}, 200
+
+
+@auth_bp.post('/demo-login')
+def demo_login():
+    """1-click demo persona login without requiring manual credentials."""
+    from app.models import User, UserRole
+    data = request.get_json(silent=True) or {}
+    role = data.get('role', 'EMPLOYEE')
+
+    valid_roles = {r.value for r in UserRole}
+    target_role = role if role in valid_roles else UserRole.EMPLOYEE.value
+
+    # Find the demo user for this role
+    user = User.query.filter_by(role=target_role, is_active=True).first()
+    if user is None:
+        # Fallback to any active user
+        user = User.query.filter_by(is_active=True).first()
+    if user is None:
+        return {'error': 'No demo accounts available'}, 404
+
+    login_user(user)
+    return {'user': user.to_dict(), 'message': f'Logged in as demo {target_role}'}, 200
