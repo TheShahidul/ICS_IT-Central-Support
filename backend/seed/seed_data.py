@@ -36,26 +36,26 @@ DEPARTMENT_NAMES = [
     "Management"
 ]
 
-# Fictional user data - first name, last name, email prefix
+# Fictional user data - Bangladeshi names
 EMPLOYEE_DATA = [
-    ("Alice", "Johnson", "ajohnson"),
-    ("Bob", "Smith", "bsmith"),
-    ("Carol", "Williams", "cwilliams"),
-    ("David", "Brown", "dbrown"),
-    ("Eve", "Davis", "edavis"),
-    ("Frank", "Miller", "fmiller"),
-    ("Grace", "Wilson", "gwilson"),
-    ("Henry", "Moore", "hmoore"),
-    ("Iris", "Taylor", "itaylor"),
-    ("Jack", "Anderson", "janderson"),
-    ("Karen", "Thomas", "kthomas"),
-    ("Leo", "Jackson", "ljackson"),
-    ("Megan", "White", "mwhite"),
-    ("Nathan", "Harris", "nharris"),
-    ("Olivia", "Martin", "omartin"),
-    ("Peter", "Garcia", "pgarcia"),
-    ("Quinn", "Rodriguez", "qrodriguez"),
-    ("Rachel", "Lee", "rlee"),
+    ("Tahsin", "Rahman", "trahman"),
+    ("Rakib", "Chowdhury", "rchowdhury"),
+    ("Md. Shahidul", "Islam Prodhan", "mshahidul"),
+    ("Tanvir", "Hasan", "thasan"),
+    ("Farhana", "Akter", "fakter"),
+    ("Sabbir", "Hossain", "shossain"),
+    ("Anika", "Tabassum", "atabassum"),
+    ("Nafis", "Ahmed", "nahmed"),
+    ("Sadia", "Sultana", "ssultana"),
+    ("Mahmudul", "Hasan", "mhasan"),
+    ("Tasnim", "Jahan", "tjahan"),
+    ("Ashraful", "Islam", "aislam"),
+    ("Nusrat", "Sharmin", "nsharmin"),
+    ("Kamrul", "Hasan", "khasan"),
+    ("Mehedi", "Hasan", "mhasan2"),
+    ("Ayesha", "Siddiqua", "asiddiqua"),
+    ("Zubair", "Mahmood", "zmahmood"),
+    ("Farhan", "Ishrak", "fishrak"),
 ]
 
 TICKET_DESCRIPTIONS = [
@@ -113,7 +113,7 @@ def create_departments():
         departments.append(dept)
         db.session.add(dept)
     db.session.commit()
-    print(f"✓ Created {len(departments)} departments")
+    print(f"[OK] Created {len(departments)} departments")
     return departments
 
 
@@ -147,9 +147,9 @@ def create_users(departments):
         users.append(user)
         db.session.add(user)
 
-    create_user("Alice Johnson", UserRole.EMPLOYEE, departments[0])
-    create_user("Bob Smith", UserRole.IT_SUPPORT, departments[4])
-    create_user("Carol Williams", UserRole.IT_MANAGER, departments[4])
+    create_user("Tahsin Rahman", UserRole.EMPLOYEE, departments[0])
+    create_user("Rakib Chowdhury", UserRole.IT_SUPPORT, departments[4])
+    create_user("Md. Shahidul Islam Prodhan", UserRole.IT_MANAGER, departments[4])
 
     for first, last, email_prefix in EMPLOYEE_DATA[3:]:
         dept = choice(departments)
@@ -157,7 +157,7 @@ def create_users(departments):
         create_user(f"{first} {last}", role, dept)
     
     db.session.commit()
-    print(f"✓ Created {len(users)} users")
+    print(f"[OK] Created {len(users)} users")
     return users
 
 
@@ -209,7 +209,7 @@ def create_assets(departments, users):
         db.session.add(asset)
     
     db.session.commit()
-    print(f"✓ Created {len(assets)} assets")
+    print(f"[OK] Created {len(assets)} assets")
     return assets
 
 
@@ -275,7 +275,7 @@ def create_tickets(users, assets):
         db.session.add(ticket)
     
     db.session.commit()
-    print(f"✓ Created {len(tickets)} tickets")
+    print(f"[OK] Created {len(tickets)} tickets")
     return tickets
 
 
@@ -312,7 +312,7 @@ def create_comments(tickets, users):
                 db.session.add(comment)
     
     db.session.commit()
-    print(f"✓ Created {len(comments)} ticket comments")
+    print(f"[OK] Created {len(comments)} ticket comments")
     return comments
 
 
@@ -325,11 +325,11 @@ def seed_database():
     try:
         # Create all tables
         db.create_all()
-        print("✓ Database tables created\n")
+        print("[OK] Database tables created\n")
         
         # Check if data already exists
         if Department.query.first():
-            print("⚠ Database already seeded. Skipping...")
+            print("[!] Database already seeded. Skipping...")
             return
         
         # Seed data
@@ -340,22 +340,22 @@ def seed_database():
         comments = create_comments(tickets, users)
         
         print("\n" + "="*60)
-        print("✓ Database seeding completed successfully!")
+        print("[OK] Database seeding completed successfully!")
         print("="*60)
         print("\nDemo Credentials:")
         print("  Email: user_id1.finance@company.com | Password: user_id1 (EMPLOYEE)")
         print("  Email: user_id1.ics@company.com | Password: user_id1 (IT_SUPPORT)")
         print("  Email: user_id2.ics@company.com | Password: user_id2 (IT_MANAGER)")
         print("\nStatistics:")
-        print(f"  • Departments: {len(departments)}")
-        print(f"  • Users: {len(users)}")
-        print(f"  • Assets: {len(assets)}")
-        print(f"  • Tickets: {len(tickets)}")
-        print(f"  • Comments: {len(comments)}")
+        print(f"  * Departments: {len(departments)}")
+        print(f"  * Users: {len(users)}")
+        print(f"  * Assets: {len(assets)}")
+        print(f"  * Tickets: {len(tickets)}")
+        print(f"  * Comments: {len(comments)}")
         print("="*60 + "\n")
         
     except Exception as e:
-        print(f"\n❌ Error seeding database: {e}")
+        print(f"\n[ERROR] Error seeding database: {e}")
         db.session.rollback()
         raise
 

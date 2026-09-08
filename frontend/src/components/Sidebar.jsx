@@ -15,7 +15,9 @@ export default function Sidebar({ role }) {
 	return (
 		<aside className="app-sidebar">
 			<div className="brand-mark" aria-label="ICS - IT Central Support">
-				<img src="/branding/ICS_icon-textbased.png" alt="ICS" />
+				<div className="brand-logo-badge">
+					<img src="/branding/ICS_icon-textbased.png" alt="ICS" />
+				</div>
 			</div>
 			<p className="sidebar-caption">Workspace</p>
 			<nav className="sidebar-nav" aria-label="Primary navigation">

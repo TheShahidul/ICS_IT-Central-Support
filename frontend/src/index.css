@@ -114,20 +114,37 @@ html, body, #root {
 :root[data-theme='dark'] .theme-manager { --theme-accent: #cf9be9; --theme-accent-soft: #493257; --theme-sidebar: #32213e; --theme-sidebar-hover: #654477; }
 
 .brand-mark {
-  padding: 0.5rem 0.5rem 1.25rem;
-  color: #f4fbf8;
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  padding: 0.5rem 0.25rem 1.25rem;
+  display: flex;
+  align-items: center;
 }
 
-.brand-mark img {
+.brand-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 175px;
+}
+
+.brand-logo-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.brand-logo-badge img {
   display: block;
-  max-width: 155px;
-  max-height: 48px;
+  max-width: 135px;
+  max-height: 38px;
+  width: 100%;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  filter: none;
 }
 
 .brand-mark span { color: #62c6a7; }

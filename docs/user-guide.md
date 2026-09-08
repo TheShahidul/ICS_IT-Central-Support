@@ -8,9 +8,9 @@ This guide explains how to navigate, test, and demonstrate the application using
 
 | Persona | Name | Role | Access Level |
 | :--- | :--- | :--- | :--- |
-| **Employee** | Alice Johnson | `EMPLOYEE` | Self-service: Log tickets, view assigned hardware, add comments |
-| **IT Support** | Bob Smith | `IT_SUPPORT` | Operational: Assign tickets, change statuses, manage hardware assets |
-| **IT Manager** | Carol Williams | `IT_MANAGER` | Governance: User administration, audit logs, full system oversight |
+| **Employee** | Tahsin Rahman | `EMPLOYEE` | Self-service: Log tickets, view assigned hardware, add comments |
+| **IT Support** | Rakib Chowdhury | `IT_SUPPORT` | Operational: Assign tickets, change statuses, manage hardware assets |
+| **IT Manager** | Md. Shahidul Islam Prodhan | `IT_MANAGER` | Governance: User administration, audit logs, full system oversight |
 
 ---
 
@@ -48,7 +48,7 @@ To explore any persona **without typing credentials**:
 ## 2. IT Support Workflow Demo
 
 1. **Review Incidents**:
-   - Switch personas to **Bob Smith (IT Support)**.
+   - Switch personas to **Rakib Chowdhury (IT Support)**.
    - Open **Tickets** from the navigation sidebar.
    - Use the live search bar (`q`) or status filters to locate tickets.
 2. **Assign & Advance Ticket**:
@@ -72,7 +72,7 @@ To explore any persona **without typing credentials**:
 ## 3. IT Manager Workflow Demo
 
 1. **Governance & User Administration**:
-   - Switch personas to **Carol Williams (IT Manager)**.
+   - Switch personas to **Md. Shahidul Islam Prodhan (IT Manager)**.
    - In the sidebar, notice the manager-exclusive links: **Audit Activity** and **Users**.
    - Click **Users** to view the employee directory.
    - Promote roles or deactivate accounts. (Safety rule: the system prevents deactivating the last active manager!).

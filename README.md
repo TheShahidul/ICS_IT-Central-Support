@@ -84,9 +84,9 @@ Open `http://localhost:5173` and use `user_id1.finance@company.com` / `user_id1`
 ## ⚡ 1-Click Instant Demo Access
 
 When running the application, you do **not need to memorize or type credentials** to review the features. On the login screen (`/login`), click any of the **Instant Guest Access** buttons:
-- 👤 **Employee** (Alice Johnson) — Self-service ticket submission & personal equipment tracking
-- 🛠️ **IT Support** (Bob Smith) — Incident assignment, status workflow progression, hardware asset updates
-- 🛡️ **IT Manager** (Carol Williams) — User administration, manager audit logs, organizational governance
+- 👤 **Employee** (Tahsin Rahman) — Self-service ticket submission & personal equipment tracking
+- 🛠️ **IT Support** (Rakib Chowdhury) — Incident assignment, status workflow progression, hardware asset updates
+- 🛡️ **IT Manager** (Md. Shahidul Islam Prodhan) — User administration, manager audit logs, organizational governance
 
 ---
 

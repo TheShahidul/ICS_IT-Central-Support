@@ -6,7 +6,7 @@ import { Eye, EyeOff, LogIn, Shield, User, Wrench } from 'lucide-react'
 const DEMO_PERSONAS = [
 	{
 		role: 'EMPLOYEE',
-		name: 'Alice Johnson',
+		name: 'Tahsin Rahman',
 		dept: 'Finance',
 		email: 'user_id1.finance@company.com',
 		password: 'user_id1',
@@ -16,7 +16,7 @@ const DEMO_PERSONAS = [
 	},
 	{
 		role: 'IT_SUPPORT',
-		name: 'Bob Smith',
+		name: 'Rakib Chowdhury',
 		dept: 'IT Support',
 		email: 'user_id1.ics@company.com',
 		password: 'user_id1',
@@ -26,7 +26,7 @@ const DEMO_PERSONAS = [
 	},
 	{
 		role: 'IT_MANAGER',
-		name: 'Carol Williams',
+		name: 'Md. Shahidul Islam Prodhan',
 		dept: 'IT Management',
 		email: 'user_id2.ics@company.com',
 		password: 'user_id2',

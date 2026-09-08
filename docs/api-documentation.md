@@ -18,7 +18,7 @@ Authenticates user with email and password.
     "user": {
       "id": 1,
       "employee_id": "USER001",
-      "name": "Alice Johnson",
+      "name": "Tahsin Rahman",
       "email": "user_id1.finance@company.com",
       "role": "EMPLOYEE",
       "department_id": 1,
