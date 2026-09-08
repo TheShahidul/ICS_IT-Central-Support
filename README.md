@@ -15,6 +15,13 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
 
+<br />
+
+### 🌐 **Live Web App**: [https://ics-it-central-support.onrender.com](https://ics-it-central-support.onrender.com)
+
+<br />
+
+[Live Demo](https://ics-it-central-support.onrender.com) •
 [Key Features](#-key-features) •
 [1-Click Demo Access](#-instant-1-click-guest-access) •
 [UI Showcase](#-ui-showcase) •
@@ -50,6 +57,8 @@ No registration or manual credential entry required! The login screen provides *
 | 🛠️ **IT Support** | Rakib Chowdhury | `IT_SUPPORT` | **Operational**: Assign tickets, advance status workflow, register & update hardware inventory |
 | 🛡️ **IT Manager** | Md. Shahidul Islam Prodhan | `IT_MANAGER` | **Executive Governance**: Manage user roles/status, inspect audit logs, full system oversight |
 
+> 🚀 **Live Demo URL:** Open **[https://ics-it-central-support.onrender.com](https://ics-it-central-support.onrender.com)** to explore the live application directly in your browser!  
+>  
 > **Credentials (if typing manually):**  
 > • Employee: `user_id1.finance@company.com` / `user_id1`  
 > • IT Support: `user_id1.ics@company.com` / `user_id1`  
@@ -229,6 +238,10 @@ tests/test_users.py ....                                                 [100%]
 ---
 
 ## 🚀 Production Deployment
+
+### 🌐 Live Cloud Deployment
+The application is deployed and live on Render:  
+👉 **[https://ics-it-central-support.onrender.com](https://ics-it-central-support.onrender.com)**
 
 ### Deploying to Render.com (1-Click Blueprint)
 
